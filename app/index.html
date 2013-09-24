@@ -1,0 +1,35 @@
+<!doctype html>
+<html ng-app="wendlerCalculator">
+  <head>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/ui-bootstrap-0.6.0.js"></script>
+    <script src="lib/ui-bootstrap-tpls-0.6.0.js"></script>
+    <script src="js/app.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet"/>    
+    <link href="css/site.css" rel="stylesheet" />
+    <title>Wendler Calculator</title>
+  </head>
+  <body>
+    <div class="main" ng-controller="WendlerCtrl">      
+      <form name="myForm">
+        <label for="select-wave">Wave:</label>
+        <select ng-model="wave" ng-options="c.name for c in waves"></select> 
+        <label for="maxweight">1RM:</label>
+        <input type="text" id="maxweight" name="maxweight" ng-pattern=/^[0-9]+([,\.][0-9]+)?$/ ng-model="maxweight" />      
+        <span ng-show="myForm.maxweight.$valid==false">Incorrect number</span>
+        <br />
+        <button type="button" class="btn btn-primary"  ng-click="countWeights()">Count</button>
+        <ul class="unstyled">
+          <li ng-repeat="set in sets">      
+            <span>{{set.reps}} x {{set.weight}} kg</span>
+          </li>
+        </ul>
+        <label for="input-reps">Last set reps:</label>
+        <input id="input-reps" type="text" ng-pattern=/^[0-9]+([,\.][0-9]+)?$/ ng-model="reps" />
+        <label for="estimate">Estimated max:</label>
+        <span id="estimate"> {{reps * sets[2].weight * 0.0333 + sets[2].weight | number}}</span>
+      </form>
+    </div>
+  </body>
+</html>
+
