@@ -1,0 +1,44 @@
+<!doctype html>
+<html ng-app="wendlerCalculator">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/ui-bootstrap-0.6.0.js"></script>
+    <script src="lib/ui-bootstrap-tpls-0.6.0.js"></script>
+    <script src="js/app.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet">    
+    <link href="css/site.css" rel="stylesheet">
+    <title>Wendler 5/3/1 Mobile Calculator</title>
+  </head>
+  <body>
+    <div class="main" ng-controller="WendlerCtrl">      
+      <form name="myForm">
+        <div class="btn-group">
+          <button type="button" class="btn" ng-repeat="value in waves" ng-model="wave.value" btn-radio="value">{{value.name}}</button>  
+        </div>
+        <label for="maxweight">1RM:</label>
+        <div class="btn-group">
+          <button type="button" class="btn" ng-repeat="value in hundredValues" ng-model="hundreds.value" btn-radio="value">{{value}}</button>  
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn" ng-repeat="value in tenValues" ng-model="tens.value" btn-radio="value">{{value}}</button>                         
+        </div>   
+        <div class="btn-group">
+          <button type="button" class="btn" ng-repeat="value in singleValues" ng-model="singles.value" btn-radio="value">{{value}}</button>
+        </div>        
+        <input type="text" id="maxweight" name="maxweight" ng-pattern=/^[0-9]+([,\.][0-9]+)?$/ ng-model="maxweight">      
+        <span ng-show="myForm.maxweight.$valid==false">Invalid number</span>        
+        <button type="button" class="btn btn-primary count" ng-click="countWeights()">Count</button>
+        <ul class="unstyled">
+          <li ng-repeat="set in sets">      
+            <span>{{set.reps}} x {{set.weight}} kg</span>
+          </li>
+        </ul>
+        <label for="input-reps">Last set reps:</label>
+        <input id="input-reps" type="text" ng-pattern=/^[0-9]+([,\.][0-9]+)?$/ ng-model="reps" />
+        <label for="estimate">Estimated max:</label>
+        <span id="estimate"> {{reps * sets[2].weight * 0.0333 + sets[2].weight | number}}</span>
+      </form>
+    </div>
+  </body>
+</html>
