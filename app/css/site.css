@@ -1,5 +1,6 @@
 .nav, .pagination, .carousel a { cursor: pointer; }
 div.main { padding: 10px; }
 ul { padding-left: 30px; }
-.btn-group, .count { display: block; margin: 6px; }
-input { margin-left: 6px;}
+.btn-group, .count { display: block; margin: 12px; margin-left: 6px; }
+input { margin-left: 6px; }
+.result { font-weight: bold; }

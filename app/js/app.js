@@ -21,25 +21,21 @@ WendlerCtrl = function($scope, $http) {
   $scope.tenValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
   $scope.singleValues = [0, 2.5, 5, 7.5];
 
+  $scope.warmupsets = [{reps: 5, weight: 0.4,}, {reps: 5, weight: 0.5,}, {reps: 3, weight: 0.6,}];
   $scope.sets = [{reps: 0, weight: 0}, {reps: 0, weight: 0}, {reps: 0, weight: 0}];
 
+  $scope.setTitles = [[5, 5, "5+"], [3, 3, "3+"], [5, 3, "1+"], [5, 5, 5]];
+  $scope.pct = [[0.65, 0.75, 0.85], [0.70, 0.80, 0.90], [0.75, 0.85, 0.95], [0.45, 0.55, 0.65]];
+    
   $scope.$watch('hundreds.value + tens.value + singles.value', function(newValue, oldValue) {
-    $scope.countMax();
+    $scope.updateMax();
   });
 
-  $scope.countWeights = function() {
-    var curWave = $scope.wave.value.value;
-    var max = $scope.maxweight?$scope.maxweight.toString().replace(/,/, "."):0;    
-    var sets = [[5, 5, "5+"], [3, 3, "3+"], [5, 3, "1+"], [5, 5, 5]];
-    var pct = [[0.65, 0.75, 0.85], [0.70, 0.80, 0.90], [0.75, 0.85, 0.95], [0.45, 0.55, 0.65]];
-    var i = 0;
-    for (i = 0; i < pct[curWave].length; i++) {
-      $scope.sets[i].weight = Math.ceil((pct[curWave][i] * (max * 0.9)) / 2.5) * 2.5;
-      $scope.sets[i].reps = sets[curWave][i];
-    }    
-  };  
+  $scope.countWeight = function(pct, maxweight) {
+    return Math.ceil((pct * (maxweight * 0.9)) / 2.5) * 2.5;
+  };
 
-  $scope.countMax = function() {
+  $scope.updateMax = function() {
     $scope.maxweight = $scope.hundreds.value + $scope.tens.value + $scope.singles.value;
   };
 };
