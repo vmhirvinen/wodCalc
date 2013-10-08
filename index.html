@@ -21,23 +21,30 @@
           <button type="button" class="btn" ng-repeat="value in hundredValues" ng-model="hundreds.value" btn-radio="value">{{value}}</button>  
         </div>
         <div class="btn-group">
-          <button type="button" class="btn" ng-repeat="value in tenValues" ng-model="tens.value" btn-radio="value">{{value}}</button>                         
+          <button type="button" class="btn" ng-repeat="value in tenValues" ng-model="tens.value" btn-radio="value">{{value}}</button>          
         </div>   
         <div class="btn-group">
           <button type="button" class="btn" ng-repeat="value in singleValues" ng-model="singles.value" btn-radio="value">{{value}}</button>
-        </div>        
+        </div>
         <input type="text" id="maxweight" name="maxweight" ng-pattern=/^[0-9]+([,\.][0-9]+)?$/ ng-model="maxweight">      
         <span ng-show="myForm.maxweight.$valid==false">Invalid number</span>        
-        <button type="button" class="btn btn-primary count" ng-click="countWeights()">Count</button>
+
+        <div>Warm up:</div>
         <ul class="unstyled">
-          <li ng-repeat="set in sets">      
-            <span>{{set.reps}} x {{set.weight}} kg</span>
+          <li ng-repeat="set in warmupsets">      
+            <span class="result">{{set.reps}} x {{countWeight(set.weight, maxweight)}} kg</span>
+          </li>
+        </ul>
+        Work sets:
+        <ul class="unstyled">
+          <li ng-repeat="title in setTitles[wave.value.value]">      
+            <span class="result">{{title}} x {{countWeight(pct[wave.value.value][$index], maxweight)}} kg</span>
           </li>
         </ul>
         <label for="input-reps">Last set reps:</label>
         <input id="input-reps" type="text" ng-pattern=/^[0-9]+([,\.][0-9]+)?$/ ng-model="reps" />
         <label for="estimate">Estimated max:</label>
-        <span id="estimate"> {{reps * sets[2].weight * 0.0333 + sets[2].weight | number}}</span>
+        <span id="estimate"> {{reps * countWeight(pct[wave.value.value][2], maxweight) * 0.0333 + countWeight(pct[wave.value.value][2], maxweight) | number:2}}</span>
       </form>
     </div>
   </body>
